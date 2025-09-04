@@ -90,6 +90,20 @@
       "description": "drat sleepily ray zany raincoat lest along",
       "isFavorite": true,
       "id": 19
+    },
+    {
+      "name": "Gerald",
+      "description": "A dog I sent in Postman",
+      "image": "/assets/blue-heeler.png",
+      "isFavorite": false,
+      "id": 20
+    },
+    {
+      "id": -1,
+      "name": "Teia",
+      "image": "/assets/boxer.jpeg",
+      "description": "A real dog!",
+      "isFavorite": true
     }
   ]
 }

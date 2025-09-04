@@ -11,6 +11,13 @@ export function FunctionalApp() {
 
   const favoriteDogs = allDogs.filter((dog) => dog.isFavorite);
   const unfavoriteDogs = allDogs.filter((dog) => !dog.isFavorite);
+
+  const handleSubmit = (input: Dog) => {
+    Requests.postDog(input);
+    refresh();
+    setActiveTab(-1);
+  };
+
   const refresh = () => {
     Requests.getAllDogs().then((dogs) => setAllDogs(dogs));
   };
@@ -38,7 +45,7 @@ export function FunctionalApp() {
         {activeTab === 1 && (
           <FunctionalDogs dogs={unfavoriteDogs} refresh={refresh} />
         )}
-        {activeTab === 2 && <FunctionalCreateDogForm />}
+        {activeTab === 2 && <FunctionalCreateDogForm onSubmit={handleSubmit} />}
       </FunctionalSection>
     </div>
   );

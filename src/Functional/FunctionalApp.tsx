@@ -11,9 +11,12 @@ export function FunctionalApp() {
 
   const favoriteDogs = allDogs.filter((dog) => dog.isFavorite);
   const unfavoriteDogs = allDogs.filter((dog) => !dog.isFavorite);
+  const refresh = () => {
+    Requests.getAllDogs().then((dogs) => setAllDogs(dogs));
+  };
 
   useEffect(() => {
-    Requests.getAllDogs().then((dogs) => setAllDogs(dogs));
+    refresh();
   }, []);
 
   return (
@@ -26,9 +29,15 @@ export function FunctionalApp() {
         setActiveTab={setActiveTab}
         dogs={allDogs}
       >
-        {activeTab === -1 && <FunctionalDogs dogs={allDogs} />}
-        {activeTab === 0 && <FunctionalDogs dogs={favoriteDogs} />}
-        {activeTab === 1 && <FunctionalDogs dogs={unfavoriteDogs} />}
+        {activeTab === -1 && (
+          <FunctionalDogs dogs={allDogs} refresh={refresh} />
+        )}
+        {activeTab === 0 && (
+          <FunctionalDogs dogs={favoriteDogs} refresh={refresh} />
+        )}
+        {activeTab === 1 && (
+          <FunctionalDogs dogs={unfavoriteDogs} refresh={refresh} />
+        )}
         {activeTab === 2 && <FunctionalCreateDogForm />}
       </FunctionalSection>
     </div>

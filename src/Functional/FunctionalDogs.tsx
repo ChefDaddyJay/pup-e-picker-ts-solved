@@ -1,16 +1,23 @@
+import { Requests } from "../api";
 import { DogCard } from "../Shared/DogCard";
-import { dogPictures } from "../dog-pictures";
 import { Dog } from "../types";
 
-export const FunctionalDogs = ({ dogs }: { dogs: Dog[] }) => {
+export const FunctionalDogs = ({
+  dogs,
+  refresh,
+}: {
+  dogs: Dog[];
+  refresh: () => void;
+}) => {
   return (
     <div className="content-container">
-      {dogs.map((dog, index) => (
+      {dogs.map((dog) => (
         <DogCard
           dog={dog}
-          key={index}
+          key={dog.id}
           onTrashIconClick={() => {
-            alert("clicked trash");
+            Requests.deleteDog(dog.id).then();
+            refresh();
           }}
           onHeartClick={() => {
             alert("clicked heart");

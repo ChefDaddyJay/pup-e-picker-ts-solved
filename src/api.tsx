@@ -1,5 +1,3 @@
-import { Dog } from "./types";
-
 export const baseUrl = "http://localhost:3000";
 
 export const Requests = {
@@ -23,14 +21,25 @@ export const Requests = {
   postDog: () => {},
 
   // should delete a dog from the database
-  deleteDog: () => {},
+  deleteDog: async (id: number) => {
+    try {
+      const response = await fetch(`${baseUrl}/dogs/${id}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        console.log(`Successfully deleted Dog #${id}`);
+      } else {
+        console.log(response.status);
+      }
+    } catch (error) {
+      console.log("Delete request error:", error);
+    }
+  },
 
   updateDog: () => {},
 
   // Just a dummy function for use in the playground
   dummyFunction: async () => {
-    Requests.getAllDogs().then((dogs: Dog[]) =>
-      console.log(dogs.findIndex((dog) => dog.id === 4))
-    );
+    Requests.deleteDog(9);
   },
 };

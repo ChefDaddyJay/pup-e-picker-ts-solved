@@ -16,14 +16,17 @@ export const FunctionalDogs = ({
           dog={dog}
           key={dog.id}
           onTrashIconClick={() => {
-            Requests.deleteDog(dog.id).then();
-            refresh();
+            Requests.deleteDog(dog.id).then(() => refresh());
           }}
           onHeartClick={() => {
-            alert("clicked heart");
+            Requests.updateDog({ ...dog, isFavorite: false }).then(() =>
+              refresh()
+            );
           }}
           onEmptyHeartClick={() => {
-            alert("clicked empty heart");
+            Requests.updateDog({ ...dog, isFavorite: true }).then(() =>
+              refresh()
+            );
           }}
           isLoading={false}
         />

@@ -1,3 +1,5 @@
+import { Dog } from "./types";
+
 export const baseUrl = "http://localhost:3000";
 
 export const Requests = {
@@ -32,11 +34,28 @@ export const Requests = {
         console.log(response.status);
       }
     } catch (error) {
-      console.log("Delete request error:", error);
+      console.error("Delete request error:", error);
     }
   },
 
-  updateDog: () => {},
+  updateDog: async (dog: Dog) => {
+    try {
+      const response = await fetch(`${baseUrl}/dogs/${dog.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dog),
+      });
+      if (response.ok) {
+        console.log(`Successfully updated Dog #${dog.id}`);
+      } else {
+        console.log(response.status);
+      }
+    } catch (error) {
+      console.error("Update request error:", error);
+    }
+  },
 
   // Just a dummy function for use in the playground
   dummyFunction: async () => {

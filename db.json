@@ -8,17 +8,10 @@
       "id": 1
     },
     {
-      "name": "Graciela",
-      "image": "/assets/dalmation.png",
-      "description": "lest perfectly so via incommode",
-      "isFavorite": false,
-      "id": 3
-    },
-    {
       "name": "Lelia",
       "image": "/assets/cowardly.png",
       "description": "before stab majestically archaeologist stack keystone quietly",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 4
     },
     {
@@ -32,7 +25,7 @@
       "name": "Margarita",
       "image": "/assets/cowardly.png",
       "description": "hastily annually loathsome intentional whenever",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 6
     },
     {
@@ -50,10 +43,10 @@
       "id": 10
     },
     {
-      "name": "Alan",
+      "name": "Bob",
       "image": "/assets/blue-heeler.png",
       "description": "mature shorts dark counter supposing yowza finally married",
-      "isFavorite": true,
+      "isFavorite": false,
       "id": 13
     },
     {
@@ -67,7 +60,7 @@
       "name": "Thad",
       "image": "/assets/boxer.png",
       "description": "following rifle closed prepone upright wrestle speedily hearty",
-      "isFavorite": true,
+      "isFavorite": false,
       "id": 15
     },
     {

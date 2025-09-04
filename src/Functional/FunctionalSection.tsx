@@ -1,8 +1,21 @@
-// you can use this type for react children if you so choose
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { Dog } from "../types";
+import { countFavorites } from "../helpers";
 
-export const FunctionalSection = () => {
+export const FunctionalSection = ({
+  activeTab,
+  setActiveTab,
+  dogs,
+  children,
+}: {
+  activeTab: number;
+  setActiveTab: (newTab: number) => void;
+  dogs: Dog[];
+  children?: ReactNode;
+}) => {
+  const favorites = countFavorites(dogs);
+
   return (
     <section id="main-section">
       <div className="container-header">
@@ -10,22 +23,31 @@ export const FunctionalSection = () => {
         <Link to={"/class"} className="btn">
           Change to Class
         </Link>
+
         <div className="selectors">
-          {/* This should display the favorited count */}
-          <div className={`selector active`} onClick={() => {}}>
-            favorited ( 12 )
+          <div
+            className={`selector ${activeTab === 0 && "active"}`}
+            onClick={() => setActiveTab(0)}
+          >
+            favorited ( {favorites} )
           </div>
 
-          {/* This should display the unfavorited count */}
-          <div className={`selector`} onClick={() => {}}>
-            unfavorited ( 25 )
+          <div
+            className={`selector ${activeTab === 1 && "active"}`}
+            onClick={() => setActiveTab(1)}
+          >
+            unfavorited ( {dogs.length - favorites} )
           </div>
-          <div className={`selector`} onClick={() => {}}>
+
+          <div
+            className={`selector ${activeTab === 2 && "active"}`}
+            onClick={() => setActiveTab(2)}
+          >
             create dog
           </div>
         </div>
       </div>
-      <div className="content-container"></div>
+      <div className="content-container">{children}</div>
     </section>
   );
 };

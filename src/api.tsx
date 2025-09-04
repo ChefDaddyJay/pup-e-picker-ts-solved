@@ -1,11 +1,12 @@
+import toast from "react-hot-toast";
 import { Dog } from "./types";
 
-export const baseUrl = "http://localhost:3000";
+export const baseUrl = "http://localhost:3000/dogs";
 
 export const Requests = {
   getAllDogs: async () => {
     try {
-      const response = await fetch(`${baseUrl}/dogs`);
+      const response = await fetch(`${baseUrl}`);
       if (response.ok) {
         const result = await response.text();
         return JSON.parse(result);
@@ -18,17 +19,16 @@ export const Requests = {
       return null;
     }
   },
-  // should create a dog in the database from a partial dog object
-  // and return a promise with the result
-  postDog: async (newDog: Dog) => {
-    const sendObject: {
-      name: string;
-      description: string;
-      image: string;
-      isFavorite: boolean;
-    } = { ...newDog };
+
+  postDog: async ({ name, description, image, isFavorite }: Dog) => {
+    const sendObject = {
+      name: name,
+      description: description,
+      image: image,
+      isFavorite: isFavorite,
+    };
     try {
-      const response = await fetch(`${baseUrl}/dogs/`, {
+      const response = await fetch(`${baseUrl}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,7 +37,7 @@ export const Requests = {
       });
       if (response.ok) {
         const result = await response.text();
-        console.log("Successfully created new Dog: ", JSON.stringify(result));
+        toast.success(`Successfully created ${JSON.parse(result).name}`);
       } else {
         console.log(response.status);
         return null;
@@ -48,17 +48,12 @@ export const Requests = {
     }
   },
 
-  // should delete a dog from the database
   deleteDog: async (id: number) => {
     try {
-      const response = await fetch(`${baseUrl}/dogs/${id}`, {
+      const response = await fetch(`${baseUrl}/${id}`, {
         method: "DELETE",
       });
-      if (response.ok) {
-        console.log(`Successfully deleted Dog #${id}`);
-      } else {
-        console.log(response.status);
-      }
+      !response.ok && console.log(response.status);
     } catch (error) {
       console.error("Delete request error:", error);
     }
@@ -66,25 +61,19 @@ export const Requests = {
 
   updateDog: async (dog: Dog) => {
     try {
-      const response = await fetch(`${baseUrl}/dogs/${dog.id}`, {
+      const response = await fetch(`${baseUrl}/${dog.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(dog),
       });
-      if (response.ok) {
-        console.log(`Successfully updated Dog #${dog.id}`);
-      } else {
-        console.log(response.status);
-      }
+      !response.ok && console.log(response.status);
     } catch (error) {
       console.error("Update request error:", error);
     }
   },
 
   // Just a dummy function for use in the playground
-  dummyFunction: async () => {
-    Requests.deleteDog(9);
-  },
+  dummyFunction: async () => {},
 };

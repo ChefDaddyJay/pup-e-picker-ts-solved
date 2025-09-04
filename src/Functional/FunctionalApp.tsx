@@ -8,18 +8,22 @@ import { Requests } from "../api";
 export function FunctionalApp() {
   const [allDogs, setAllDogs] = useState<Dog[]>([]);
   const [activeTab, setActiveTab] = useState(-1);
+  const [isLoading, setIsLoading] = useState(true);
 
   const favoriteDogs = allDogs.filter((dog) => dog.isFavorite);
   const unfavoriteDogs = allDogs.filter((dog) => !dog.isFavorite);
 
   const handleSubmit = (input: Dog) => {
-    Requests.postDog(input);
-    refresh();
-    setActiveTab(-1);
+    setIsLoading(true);
+    Requests.postDog(input).then(() => refresh());
   };
 
   const refresh = () => {
-    Requests.getAllDogs().then((dogs) => setAllDogs(dogs));
+    setIsLoading(true);
+    Requests.getAllDogs().then((dogs) => {
+      setAllDogs(dogs);
+      setIsLoading(false);
+    });
   };
 
   useEffect(() => {
@@ -37,15 +41,35 @@ export function FunctionalApp() {
         dogs={allDogs}
       >
         {activeTab === -1 && (
-          <FunctionalDogs dogs={allDogs} refresh={refresh} />
+          <FunctionalDogs
+            dogs={allDogs}
+            isLoading={isLoading}
+            setLoading={setIsLoading}
+            refresh={refresh}
+          />
         )}
         {activeTab === 0 && (
-          <FunctionalDogs dogs={favoriteDogs} refresh={refresh} />
+          <FunctionalDogs
+            dogs={favoriteDogs}
+            isLoading={isLoading}
+            setLoading={setIsLoading}
+            refresh={refresh}
+          />
         )}
         {activeTab === 1 && (
-          <FunctionalDogs dogs={unfavoriteDogs} refresh={refresh} />
+          <FunctionalDogs
+            dogs={unfavoriteDogs}
+            isLoading={isLoading}
+            setLoading={setIsLoading}
+            refresh={refresh}
+          />
         )}
-        {activeTab === 2 && <FunctionalCreateDogForm onSubmit={handleSubmit} />}
+        {activeTab === 2 && (
+          <FunctionalCreateDogForm
+            onSubmit={handleSubmit}
+            isLoading={isLoading}
+          />
+        )}
       </FunctionalSection>
     </div>
   );

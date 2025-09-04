@@ -15,6 +15,11 @@ export const FunctionalSection = ({
   children?: ReactNode;
 }) => {
   const favorites = countFavorites(dogs);
+  const tabs = [
+    `favorited ( ${favorites} )`,
+    `unfavorited ( ${dogs.length - favorites} )`,
+    "create dog",
+  ];
 
   return (
     <section id="main-section">
@@ -25,26 +30,15 @@ export const FunctionalSection = ({
         </Link>
 
         <div className="selectors">
-          <div
-            className={`selector ${activeTab === 0 && "active"}`}
-            onClick={() => setActiveTab(activeTab === 0 ? -1 : 0)}
-          >
-            favorited ( {favorites} )
-          </div>
-
-          <div
-            className={`selector ${activeTab === 1 && "active"}`}
-            onClick={() => setActiveTab(activeTab === 1 ? -1 : 1)}
-          >
-            unfavorited ( {dogs.length - favorites} )
-          </div>
-
-          <div
-            className={`selector ${activeTab === 2 && "active"}`}
-            onClick={() => setActiveTab(activeTab === 2 ? -1 : 2)}
-          >
-            create dog
-          </div>
+          {tabs.map((tab, index) => (
+            <div
+              key={index}
+              className={`selector ${activeTab === index && "active"}`}
+              onClick={() => setActiveTab(activeTab === index ? -1 : index)}
+            >
+              {tab}
+            </div>
+          ))}
         </div>
       </div>
       <div className="content-container">{children}</div>

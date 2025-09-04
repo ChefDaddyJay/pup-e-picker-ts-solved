@@ -1,55 +1,60 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { dogPictures } from "../dog-pictures";
 import { defaultDog } from "../helpers";
 import { Dog } from "../types";
 
 export const FunctionalCreateDogForm = ({
   onSubmit,
+  isLoading,
 }: {
   onSubmit: (input: Dog) => void;
+  isLoading: boolean;
 }) => {
-  const [dogInput, setDogInput] = useState({ ...defaultDog });
+  const [inputState, setInputState] = useState({ ...defaultDog });
 
   const handleChange = (
     key: "name" | "description" | "image",
     input: string
   ) => {
-    const newState: Dog = { ...dogInput };
+    const newState: Dog = { ...inputState };
     newState[key] = input;
-    setDogInput(newState);
+    setInputState(newState);
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onSubmit(inputState);
+    setInputState({ ...defaultDog });
   };
 
   return (
-    <form
-      action=""
-      id="create-dog-form"
-      onSubmit={(e) => {
-        e.preventDefault();
-        onSubmit(dogInput);
-      }}
-    >
+    <form action="" id="create-dog-form" onSubmit={handleSubmit}>
       <h4>Create a New Dog</h4>
+
       <label htmlFor="name">Dog Name</label>
       <input
         type="text"
-        disabled={false}
-        value={dogInput.name}
+        disabled={isLoading}
+        value={inputState.name}
         onChange={(e) => handleChange("name", e.target.value)}
       />
+
       <label htmlFor="description">Dog Description</label>
       <textarea
         name=""
         id=""
         cols={80}
         rows={10}
-        disabled={false}
-        value={dogInput.description}
+        disabled={isLoading}
+        value={inputState.description}
         onChange={(e) => handleChange("description", e.target.value)}
       ></textarea>
+
       <label htmlFor="picture">Select an Image</label>
       <select
         id=""
-        value={dogInput.image}
+        value={inputState.image}
+        disabled={isLoading}
         onChange={(e) => handleChange("image", e.target.value)}
       >
         {Object.entries(dogPictures).map(([label, pictureValue]) => {
@@ -60,6 +65,7 @@ export const FunctionalCreateDogForm = ({
           );
         })}
       </select>
+
       <input type="submit" />
     </form>
   );

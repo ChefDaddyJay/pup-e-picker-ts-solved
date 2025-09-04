@@ -27,21 +27,21 @@ export const FunctionalSection = ({
         <div className="selectors">
           <div
             className={`selector ${activeTab === 0 && "active"}`}
-            onClick={() => setActiveTab(0)}
+            onClick={() => setActiveTab(activeTab === 0 ? -1 : 0)}
           >
             favorited ( {favorites} )
           </div>
 
           <div
             className={`selector ${activeTab === 1 && "active"}`}
-            onClick={() => setActiveTab(1)}
+            onClick={() => setActiveTab(activeTab === 1 ? -1 : 1)}
           >
             unfavorited ( {dogs.length - favorites} )
           </div>
 
           <div
             className={`selector ${activeTab === 2 && "active"}`}
-            onClick={() => setActiveTab(2)}
+            onClick={() => setActiveTab(activeTab === 2 ? -1 : 2)}
           >
             create dog
           </div>

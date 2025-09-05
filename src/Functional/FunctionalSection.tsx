@@ -1,26 +1,17 @@
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { Dog } from "../types";
-import { countFavorites } from "../helpers";
 
 export const FunctionalSection = ({
+  tabs,
   activeTab,
   setActiveTab,
-  dogs,
   children,
 }: {
+  tabs: string[];
   activeTab: number;
   setActiveTab: (newTab: number) => void;
-  dogs: Dog[];
   children?: ReactNode;
 }) => {
-  const favorites = countFavorites(dogs);
-  const tabs = [
-    `favorited ( ${favorites} )`,
-    `unfavorited ( ${dogs.length - favorites} )`,
-    "create dog",
-  ];
-
   return (
     <section id="main-section">
       <div className="container-header">
@@ -34,7 +25,7 @@ export const FunctionalSection = ({
             <div
               key={index}
               className={`selector ${activeTab === index && "active"}`}
-              onClick={() => setActiveTab(activeTab === index ? -1 : index)}
+              onClick={() => setActiveTab(activeTab === index ? 0 : index)}
             >
               {tab}
             </div>

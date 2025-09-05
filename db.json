@@ -188,6 +188,13 @@
       "image": "/assets/corgi.png",
       "isFavorite": true,
       "id": 37
+    },
+    {
+      "name": "Aurora",
+      "description": "Hard to pronounce?",
+      "image": "/assets/boxer.jpeg",
+      "isFavorite": false,
+      "id": 38
     }
   ]
 }

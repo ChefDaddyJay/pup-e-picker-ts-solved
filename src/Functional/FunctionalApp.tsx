@@ -7,7 +7,7 @@ import { Requests } from "../api";
 
 export function FunctionalApp() {
   const [allDogs, setAllDogs] = useState<Dog[]>([]);
-  const [activeTab, setActiveTab] = useState(-1);
+  const [activeTab, setActiveTab] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
   const favoriteDogs = allDogs.filter((dog) => dog.isFavorite);
@@ -30,46 +30,62 @@ export function FunctionalApp() {
     refresh();
   }, []);
 
+  const tabs = [
+    {
+      label: `all ( ${allDogs.length} )`,
+      content: (
+        <FunctionalDogs
+          dogs={allDogs}
+          isLoading={isLoading}
+          setLoading={setIsLoading}
+          refresh={refresh}
+        />
+      ),
+    },
+    {
+      label: `favorited ( ${favoriteDogs.length} )`,
+      content: (
+        <FunctionalDogs
+          dogs={favoriteDogs}
+          isLoading={isLoading}
+          setLoading={setIsLoading}
+          refresh={refresh}
+        />
+      ),
+    },
+    {
+      label: `unfavorited ( ${unfavoriteDogs.length} )`,
+      content: (
+        <FunctionalDogs
+          dogs={unfavoriteDogs}
+          isLoading={isLoading}
+          setLoading={setIsLoading}
+          refresh={refresh}
+        />
+      ),
+    },
+    {
+      label: "create dog",
+      content: (
+        <FunctionalCreateDogForm
+          onSubmit={handleSubmit}
+          isLoading={isLoading}
+        />
+      ),
+    },
+  ];
+
   return (
     <div className="App" style={{ backgroundColor: "skyblue" }}>
       <header>
         <h1>pup-e-picker (Functional)</h1>
       </header>
       <FunctionalSection
+        tabs={tabs.map((tab) => tab.label)}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        dogs={allDogs}
       >
-        {activeTab === -1 && (
-          <FunctionalDogs
-            dogs={allDogs}
-            isLoading={isLoading}
-            setLoading={setIsLoading}
-            refresh={refresh}
-          />
-        )}
-        {activeTab === 0 && (
-          <FunctionalDogs
-            dogs={favoriteDogs}
-            isLoading={isLoading}
-            setLoading={setIsLoading}
-            refresh={refresh}
-          />
-        )}
-        {activeTab === 1 && (
-          <FunctionalDogs
-            dogs={unfavoriteDogs}
-            isLoading={isLoading}
-            setLoading={setIsLoading}
-            refresh={refresh}
-          />
-        )}
-        {activeTab === 2 && (
-          <FunctionalCreateDogForm
-            onSubmit={handleSubmit}
-            isLoading={isLoading}
-          />
-        )}
+        {tabs[activeTab].content}
       </FunctionalSection>
     </div>
   );

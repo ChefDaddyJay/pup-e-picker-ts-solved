@@ -14,7 +14,7 @@ type ClassAppState = {
 export class ClassApp extends Component<{}, ClassAppState> {
   state: ClassAppState = {
     allDogs: [],
-    activeTab: -1,
+    activeTab: 0,
     isLoading: false,
   };
   getFavoriteDogs() {
@@ -45,56 +45,70 @@ export class ClassApp extends Component<{}, ClassAppState> {
 
   render() {
     const { allDogs, activeTab, isLoading } = this.state;
+    const favoriteDogs = this.getFavoriteDogs();
+    const unfavoriteDogs = this.getUnfavoriteDogs();
+    const tabs = [
+      {
+        label: `all ( ${allDogs.length} )`,
+        content: (
+          <ClassDogs
+            dogs={allDogs}
+            isLoading={isLoading}
+            setLoading={(loading: boolean) =>
+              this.setState({ isLoading: loading })
+            }
+            refresh={this.refresh}
+          />
+        ),
+      },
+      {
+        label: `favorited ( ${favoriteDogs.length} )`,
+        content: (
+          <ClassDogs
+            dogs={this.getFavoriteDogs()}
+            isLoading={isLoading}
+            setLoading={(loading: boolean) =>
+              this.setState({ isLoading: loading })
+            }
+            refresh={this.refresh}
+          />
+        ),
+      },
+      {
+        label: `unfavorited ( ${unfavoriteDogs.length} )`,
+        content: (
+          <ClassDogs
+            dogs={this.getUnfavoriteDogs()}
+            isLoading={isLoading}
+            setLoading={(loading: boolean) =>
+              this.setState({ isLoading: loading })
+            }
+            refresh={this.refresh}
+          />
+        ),
+      },
+      {
+        label: "create dog",
+        content: (
+          <ClassCreateDogForm
+            onSubmit={this.handleSubmit.bind(this)}
+            isLoading={isLoading}
+          />
+        ),
+      },
+    ];
+
     return (
       <div className="App" style={{ backgroundColor: "goldenrod" }}>
         <header>
           <h1>pup-e-picker (Class Version)</h1>
         </header>
         <ClassSection
-          tabs={[
-            `favorited ( ${this.getFavoriteDogs().length} )`,
-            `unfavorited ( ${this.getUnfavoriteDogs().length} )`,
-            "create dog",
-          ]}
+          tabs={tabs.map((tab) => tab.label)}
           activeTab={activeTab}
           setActiveTab={(tab: number) => this.setState({ activeTab: tab })}
         >
-          {activeTab === -1 && (
-            <ClassDogs
-              dogs={allDogs}
-              isLoading={isLoading}
-              setLoading={(loading: boolean) =>
-                this.setState({ isLoading: loading })
-              }
-              refresh={this.refresh}
-            />
-          )}
-          {activeTab === 0 && (
-            <ClassDogs
-              dogs={this.getFavoriteDogs()}
-              isLoading={isLoading}
-              setLoading={(loading: boolean) =>
-                this.setState({ isLoading: loading })
-              }
-              refresh={this.refresh}
-            />
-          )}
-          {activeTab === 1 && (
-            <ClassDogs
-              dogs={this.getUnfavoriteDogs()}
-              isLoading={isLoading}
-              setLoading={(loading: boolean) =>
-                this.setState({ isLoading: loading })
-              }
-              refresh={this.refresh}
-            />
-          )}
-          {activeTab === 2 && (
-            <ClassCreateDogForm
-              onSubmit={this.handleSubmit.bind(this)}
-              isLoading={isLoading}
-            />
-          )}
+          {tabs[activeTab].content}
         </ClassSection>
       </div>
     );

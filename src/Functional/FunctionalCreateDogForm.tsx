@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 import { dogPictures } from "../dog-pictures";
-import { defaultDog } from "../helpers";
+import { DEFAULT_DOG } from "../helpers";
 import { Dog } from "../types";
 
 export const FunctionalCreateDogForm = ({
@@ -10,7 +10,7 @@ export const FunctionalCreateDogForm = ({
   onSubmit: (input: Dog) => void;
   isLoading: boolean;
 }) => {
-  const [inputState, setInputState] = useState({ ...defaultDog });
+  const [inputState, setInputState] = useState({ ...DEFAULT_DOG });
 
   const handleChange = (
     key: "name" | "description" | "image",
@@ -24,7 +24,7 @@ export const FunctionalCreateDogForm = ({
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit(inputState);
-    setInputState({ ...defaultDog });
+    setInputState({ ...DEFAULT_DOG });
   };
 
   return (

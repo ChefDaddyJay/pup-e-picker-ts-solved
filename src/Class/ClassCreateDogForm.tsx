@@ -1,7 +1,7 @@
 import { Component, FormEvent } from "react";
 import { dogPictures } from "../dog-pictures";
 import { Dog } from "../types";
-import { defaultDog } from "../helpers";
+import { DEFAULT_DOG } from "../helpers";
 
 type ClassCreateDogFormProps = {
   onSubmit: (input: Dog) => void;
@@ -12,7 +12,7 @@ export class ClassCreateDogForm extends Component<
   ClassCreateDogFormProps,
   Dog
 > {
-  state = { ...defaultDog };
+  state = { ...DEFAULT_DOG };
 
   handleChange(key: "name" | "description" | "image", input: string) {
     const newState: Dog = { ...this.state };
@@ -23,7 +23,7 @@ export class ClassCreateDogForm extends Component<
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     this.props.onSubmit(this.state);
-    this.setState({ ...defaultDog });
+    this.setState({ ...DEFAULT_DOG });
   };
 
   render() {
@@ -44,8 +44,6 @@ export class ClassCreateDogForm extends Component<
 
         <label htmlFor="description">Dog Description</label>
         <textarea
-          name=""
-          id=""
           cols={80}
           rows={10}
           disabled={isLoading}
@@ -55,18 +53,15 @@ export class ClassCreateDogForm extends Component<
 
         <label htmlFor="picture">Select an Image</label>
         <select
-          id=""
           value={image}
           disabled={isLoading}
           onChange={(e) => this.handleChange("image", e.target.value)}
         >
-          {Object.entries(dogPictures).map(([label, pictureValue]) => {
-            return (
-              <option value={pictureValue} key={pictureValue}>
-                {label}
-              </option>
-            );
-          })}
+          {Object.entries(dogPictures).map(([label, pictureValue]) => (
+            <option value={pictureValue} key={pictureValue}>
+              {label}
+            </option>
+          ))}
         </select>
 
         <input type="submit" />

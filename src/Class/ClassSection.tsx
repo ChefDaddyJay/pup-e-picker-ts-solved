@@ -26,7 +26,7 @@ export class ClassSection extends Component<ClassSectionProps> {
               <div
                 key={index}
                 className={`selector ${activeTab === index && "active"}`}
-                onClick={() => setActiveTab(activeTab === index ? -1 : index)}
+                onClick={() => setActiveTab(activeTab === index ? 0 : index)}
               >
                 {tab}
               </div>

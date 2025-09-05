@@ -17,10 +17,12 @@ export class ClassDogs extends Component<ClassDogsProps> {
       this.props.refresh()
     );
   }
+
   deleteDog(dog: Dog) {
     this.props.setLoading(true);
     Requests.deleteDog(dog.id).then(() => this.props.refresh());
   }
+
   render() {
     const { dogs, isLoading } = this.props;
 

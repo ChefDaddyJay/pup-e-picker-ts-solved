@@ -11,7 +11,7 @@ type ClassAppState = {
   isLoading: boolean;
 };
 
-export class ClassApp extends Component<{}, ClassAppState> {
+export class ClassApp extends Component<object, ClassAppState> {
   state: ClassAppState = {
     allDogs: [],
     activeTab: 0,

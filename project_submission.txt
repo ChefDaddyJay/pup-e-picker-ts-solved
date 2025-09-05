@@ -1,0 +1,6 @@
+Joshua Tryon - Pup-e-Picker TS
+
+https://github.com/ChefDaddyJay/pup-e-picker-ts-solved
+
+HTTPS - https://github.com/ChefDaddyJay/pup-e-picker-ts-solved.git
+SSH - git@github.com:ChefDaddyJay/pup-e-picker-ts-solved.git

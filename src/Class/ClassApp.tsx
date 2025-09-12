@@ -2,19 +2,19 @@ import { Component } from "react";
 import { ClassSection } from "./ClassSection";
 import { ClassDogs } from "./ClassDogs";
 import { ClassCreateDogForm } from "./ClassCreateDogForm";
-import { Dog } from "../types";
+import { Dog, Tab, TTabKey, TTabSet } from "../types";
 import { Requests } from "../api";
 
 type ClassAppState = {
   allDogs: Dog[];
-  activeTab: number;
+  activeTab: TTabKey;
   isLoading: boolean;
 };
 
 export class ClassApp extends Component<object, ClassAppState> {
   state: ClassAppState = {
     allDogs: [],
-    activeTab: 0,
+    activeTab: "all",
     isLoading: false,
   };
   getFavoriteDogs() {
@@ -23,80 +23,64 @@ export class ClassApp extends Component<object, ClassAppState> {
   getUnfavoriteDogs() {
     return this.state.allDogs.filter((dog) => !dog.isFavorite);
   }
+  refreshDogs = () =>
+    Requests.getAllDogs()
+      .then((allDogs) => this.setState({ allDogs }))
+      .catch(() => {
+        throw new Error("Failed to retrieve dogs.");
+      });
 
-  handleSubmit(input: Dog) {
+  async createDog(input: Dog) {
     this.setState({ isLoading: true });
-    Requests.postDog(input).then(() => this.refresh());
+    try {
+      await Requests.postDog(input);
+      return await this.refreshDogs();
+    } catch {
+      throw new Error("Failed to create dog.");
+    } finally {
+      this.setState({ isLoading: false });
+    }
   }
 
-  refresh = () => {
-    this.setState({ isLoading: true });
-    Requests.getAllDogs().then((dogs) =>
-      this.setState({
-        allDogs: dogs,
-        isLoading: false,
-      })
-    );
-  };
-
   componentDidMount() {
-    this.refresh();
+    this.refreshDogs();
   }
 
   render() {
     const { allDogs, activeTab, isLoading } = this.state;
+    const setLoading = (loading: boolean) =>
+      this.setState({ isLoading: loading });
     const favoriteDogs = this.getFavoriteDogs();
     const unfavoriteDogs = this.getUnfavoriteDogs();
-    const tabs = [
-      {
-        label: `all ( ${allDogs.length} )`,
+
+    const dogsTab = (label: TTabKey, dogs: Dog[]) => {
+      return {
+        label: `${label} ( ${dogs.length} )`,
         content: (
           <ClassDogs
-            dogs={allDogs}
+            dogs={dogs}
             isLoading={isLoading}
-            setLoading={(loading: boolean) =>
-              this.setState({ isLoading: loading })
-            }
-            refresh={this.refresh}
+            setLoading={setLoading}
+            refresh={this.refreshDogs}
           />
         ),
-      },
-      {
-        label: `favorited ( ${favoriteDogs.length} )`,
-        content: (
-          <ClassDogs
-            dogs={this.getFavoriteDogs()}
-            isLoading={isLoading}
-            setLoading={(loading: boolean) =>
-              this.setState({ isLoading: loading })
-            }
-            refresh={this.refresh}
-          />
-        ),
-      },
-      {
-        label: `unfavorited ( ${unfavoriteDogs.length} )`,
-        content: (
-          <ClassDogs
-            dogs={this.getUnfavoriteDogs()}
-            isLoading={isLoading}
-            setLoading={(loading: boolean) =>
-              this.setState({ isLoading: loading })
-            }
-            refresh={this.refresh}
-          />
-        ),
-      },
-      {
+      } as Tab;
+    };
+
+    const tabs: TTabSet = {
+      all: dogsTab("all", allDogs),
+      favorite: dogsTab("favorite", favoriteDogs),
+      unfavorite: dogsTab("unfavorite", unfavoriteDogs),
+      create: {
         label: "create dog",
         content: (
           <ClassCreateDogForm
-            onSubmit={this.handleSubmit.bind(this)}
+            onSubmit={this.createDog.bind(this)}
             isLoading={isLoading}
           />
         ),
       },
-    ];
+    };
 
     return (
       <div className="App" style={{ backgroundColor: "goldenrod" }}>
@@ -104,9 +88,9 @@ export class ClassApp extends Component<object, ClassAppState> {
           <h1>pup-e-picker (Class Version)</h1>
         </header>
         <ClassSection
-          tabs={tabs.map((tab) => tab.label)}
+          tabs={tabs}
           activeTab={activeTab}
-          setActiveTab={(tab: number) => this.setState({ activeTab: tab })}
+          setActiveTab={(tab: TTabKey) => this.setState({ activeTab: tab })}
         >
           {tabs[activeTab].content}
         </ClassSection>

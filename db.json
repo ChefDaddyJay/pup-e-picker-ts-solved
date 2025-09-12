@@ -32,14 +32,14 @@
       "name": "Bernard",
       "image": "/assets/corgi.png",
       "description": "jolly beneath around tensely versus",
-      "isFavorite": true,
+      "isFavorite": false,
       "id": 10
     },
     {
       "name": "Tiffany",
       "image": "/assets/corgi.png",
       "description": "depict compare likewise outside violently bafflement when",
-      "isFavorite": true,
+      "isFavorite": false,
       "id": 16
     },
     {
@@ -50,25 +50,11 @@
       "id": 17
     },
     {
-      "name": "Madisyn",
-      "image": "/assets/blue-heeler.png",
-      "description": "reprieve whoever lumpy burial catalyse hose ew oh",
-      "isFavorite": true,
-      "id": 18
-    },
-    {
       "name": "Kristian",
       "image": "/assets/corgi.png",
       "description": "drat sleepily ray zany raincoat lest along",
       "isFavorite": true,
       "id": 19
-    },
-    {
-      "name": "Gerald",
-      "description": "A dog I sent in Postman",
-      "image": "/assets/blue-heeler.png",
-      "isFavorite": false,
-      "id": 20
     },
     {
       "name": "Slow",
@@ -88,57 +74,50 @@
       "name": "sarah",
       "description": "coach",
       "image": "/assets/blue-heeler.png",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 23
     },
     {
       "name": "Kovu",
       "description": "It works!?",
       "image": "/assets/cowardly.png",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 24
     },
     {
       "name": "Jane",
       "description": "Jane is a dog",
       "image": "/assets/blue-heeler.png",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 25
     },
     {
       "name": "Mary",
       "description": "Another dog",
       "image": "/assets/cowardly.png",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 26
     },
     {
       "name": "Joey",
       "description": "How you doin'?",
       "image": "/assets/blue-heeler.png",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 27
     },
     {
       "name": "Rhysand",
       "description": "Ooooooo",
       "image": "/assets/dalmation.png",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 28
     },
     {
       "name": "Violet",
       "description": "Should I get the wing leader?",
       "image": "/assets/chihuahua.avif",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 29
-    },
-    {
-      "name": "Feyra",
-      "description": "that's one",
-      "image": "/assets/blue-heeler.png",
-      "isFavorite": false,
-      "id": 30
     },
     {
       "name": "Janet",
@@ -165,7 +144,7 @@
       "name": "another",
       "description": "five",
       "image": "/assets/blue-heeler.png",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 34
     },
     {
@@ -195,6 +174,69 @@
       "image": "/assets/boxer.jpeg",
       "isFavorite": false,
       "id": 38
+    },
+    {
+      "name": "Johnny",
+      "description": "Johnny Dogsome",
+      "image": "/assets/boxer.jpeg",
+      "isFavorite": false,
+      "id": 39
+    },
+    {
+      "name": "Bobby",
+      "description": "Dammit Bobby!",
+      "image": "/assets/blue-heeler.png",
+      "isFavorite": false,
+      "id": 40
+    },
+    {
+      "name": "Jessica",
+      "description": "Rabbit",
+      "image": "/assets/dalmation.png",
+      "isFavorite": true,
+      "id": 41
+    },
+    {
+      "name": "Try",
+      "description": "Again",
+      "image": "/assets/cowardly.png",
+      "isFavorite": false,
+      "id": 42
+    },
+    {
+      "name": "May-B!",
+      "description": "YUP!!",
+      "image": "/assets/chihuahua.avif",
+      "isFavorite": false,
+      "id": 43
+    },
+    {
+      "name": "srn",
+      "description": "nywa4",
+      "image": "/assets/blue-heeler.png",
+      "isFavorite": false,
+      "id": 44
+    },
+    {
+      "name": "aeh",
+      "description": "qe5h",
+      "image": "/assets/blue-heeler.png",
+      "isFavorite": true,
+      "id": 45
+    },
+    {
+      "name": "awergh",
+      "description": "zdfbz",
+      "image": "/assets/blue-heeler.png",
+      "isFavorite": false,
+      "id": 46
+    },
+    {
+      "name": "RSb",
+      "description": "tnzet",
+      "image": "/assets/blue-heeler.png",
+      "isFavorite": true,
+      "id": 47
     }
   ]
 }

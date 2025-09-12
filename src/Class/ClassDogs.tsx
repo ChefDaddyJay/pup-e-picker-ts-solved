@@ -2,6 +2,7 @@ import { DogCard } from "../Shared/DogCard";
 import { Component } from "react";
 import { Dog } from "../types";
 import { Requests } from "../api";
+import toast from "react-hot-toast";
 
 type ClassDogsProps = {
   dogs: Dog[];
@@ -13,14 +14,18 @@ type ClassDogsProps = {
 export class ClassDogs extends Component<ClassDogsProps> {
   setFavorite(dog: Dog, isFavorite: boolean) {
     this.props.setLoading(true);
-    Requests.updateDog({ ...dog, isFavorite: isFavorite }).then(() =>
-      this.props.refresh()
-    );
+    Requests.updateDog({ ...dog, isFavorite: isFavorite })
+      .then(() => this.props.refresh())
+      .catch(() => toast.error("Failed to update dog. Please try again."))
+      .finally(() => this.props.setLoading(false));
   }
 
   deleteDog(dog: Dog) {
     this.props.setLoading(true);
-    Requests.deleteDog(dog.id).then(() => this.props.refresh());
+    Requests.deleteDog(dog.id)
+      .then(() => this.props.refresh())
+      .catch(() => toast.error("Failed to delete dog. Please try again."))
+      .finally(() => this.props.setLoading(false));
   }
 
   render() {

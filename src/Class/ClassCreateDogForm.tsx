@@ -2,9 +2,10 @@ import { Component, FormEvent } from "react";
 import { dogPictures } from "../dog-pictures";
 import { Dog } from "../types";
 import { DEFAULT_DOG } from "../helpers";
+import toast from "react-hot-toast";
 
 type ClassCreateDogFormProps = {
-  onSubmit: (input: Dog) => void;
+  onSubmit: (input: Dog) => Promise<void>;
   isLoading: boolean;
 };
 
@@ -22,8 +23,15 @@ export class ClassCreateDogForm extends Component<
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    this.props.onSubmit(this.state);
-    this.setState({ ...DEFAULT_DOG });
+    this.props
+      .onSubmit(this.state)
+      .then(() => {
+        toast.success(`Successfully created ${this.state.name}`);
+        this.setState({ ...DEFAULT_DOG });
+      })
+      .catch(() => {
+        toast.error("Failed to create dog. Please try again.");
+      });
   };
 
   render() {

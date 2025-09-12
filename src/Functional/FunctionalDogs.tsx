@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { Requests } from "../api";
 import { DogCard } from "../Shared/DogCard";
 import { Dog } from "../types";
@@ -6,23 +7,27 @@ export const FunctionalDogs = ({
   dogs,
   isLoading,
   setLoading,
-  refresh,
+  refreshDogs,
 }: {
   dogs: Dog[];
   isLoading: boolean;
   setLoading: (isLoading: boolean) => void;
-  refresh: () => void;
+  refreshDogs: () => void;
 }) => {
   const setFavorite = (dog: Dog, isFavorite: boolean) => {
     setLoading(true);
-    Requests.updateDog({ ...dog, isFavorite: isFavorite }).then(() =>
-      refresh()
-    );
+    Requests.updateDog({ ...dog, isFavorite: isFavorite })
+      .then(() => refreshDogs())
+      .catch(() => toast.error("Failed to update dog. Please try again."))
+      .finally(() => setLoading(false));
   };
 
   const deleteDog = (dog: Dog) => {
     setLoading(true);
-    Requests.deleteDog(dog.id).then(() => refresh());
+    Requests.deleteDog(dog.id)
+      .then(() => refreshDogs())
+      .catch(() => toast.error("Failed to delete dog. Please try again."))
+      .finally(() => setLoading(false));
   };
 
   return (

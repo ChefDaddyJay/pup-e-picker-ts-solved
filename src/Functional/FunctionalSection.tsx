@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { TTabKey, TTabSet } from "../types";
 
 export const FunctionalSection = ({
   tabs,
@@ -7,11 +8,13 @@ export const FunctionalSection = ({
   setActiveTab,
   children,
 }: {
-  tabs: string[];
-  activeTab: number;
-  setActiveTab: (newTab: number) => void;
+  tabs: TTabSet;
+  activeTab: TTabKey;
+  setActiveTab: (newTab: TTabKey) => void;
   children?: ReactNode;
 }) => {
+  const defaultTabKey = "all" as TTabKey;
+
   return (
     <section id="main-section">
       <div className="container-header">
@@ -21,15 +24,21 @@ export const FunctionalSection = ({
         </Link>
 
         <div className="selectors">
-          {tabs.map((tab, index) => (
-            <div
-              key={index}
-              className={`selector ${activeTab === index && "active"}`}
-              onClick={() => setActiveTab(activeTab === index ? 0 : index)}
-            >
-              {tab}
-            </div>
-          ))}
+          {Object.keys(tabs).map((key) => {
+            const tabKey = key as TTabKey;
+
+            return (
+              <div
+                key={key}
+                className={`selector ${activeTab === tabKey && "active"}`}
+                onClick={() =>
+                  setActiveTab(activeTab === tabKey ? defaultTabKey : tabKey)
+                }
+              >
+                {tabs[tabKey].label}
+              </div>
+            );
+          })}
         </div>
       </div>
       <div className="content-container">{children}</div>

@@ -2,12 +2,13 @@ import { FormEvent, useState } from "react";
 import { dogPictures } from "../dog-pictures";
 import { DEFAULT_DOG } from "../helpers";
 import { Dog } from "../types";
+import toast from "react-hot-toast";
 
 export const FunctionalCreateDogForm = ({
   onSubmit,
   isLoading,
 }: {
-  onSubmit: (input: Dog) => void;
+  onSubmit: (input: Dog) => Promise<void>;
   isLoading: boolean;
 }) => {
   const [inputState, setInputState] = useState({ ...DEFAULT_DOG });
@@ -23,8 +24,14 @@ export const FunctionalCreateDogForm = ({
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit(inputState);
-    setInputState({ ...DEFAULT_DOG });
+    onSubmit(inputState)
+      .then(() => {
+        toast.success(`Successfully created ${inputState.name}`);
+        setInputState({ ...DEFAULT_DOG });
+      })
+      .catch(() => {
+        toast.error("Failed to create dog. Please try again.");
+      });
   };
 
   return (

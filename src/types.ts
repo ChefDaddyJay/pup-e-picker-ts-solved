@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export type Dog = {
   id: number;
   name: string;
@@ -7,6 +9,10 @@ export type Dog = {
 };
 
 export type Tab = {
-  title: string;
-  count: number | null;
+  label: string;
+  content: ReactNode;
 };
+
+export type TTabKey = "all" | "favorite" | "unfavorite" | "create";
+
+export type TTabSet = Record<TTabKey, Tab>;
